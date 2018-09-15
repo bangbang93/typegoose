@@ -17,14 +17,16 @@ export type InstanceType<T> = T & mongoose.Document;
 export type ModelType<T> = mongoose.Model<InstanceType<T>> & T;
 
 export interface GetModelForClassOptions {
+  name?: string;
   existingMongoose?: mongoose.Mongoose;
   schemaOptions?: mongoose.SchemaOptions;
   existingConnection?: mongoose.Connection;
 }
 
 export class Typegoose {
-  getModelForClass<T>(t: T, { existingMongoose, schemaOptions, existingConnection }: GetModelForClassOptions = {}) {
-    const name = this.constructor.name;
+  getModelForClass<T>(t: T, { existingMongoose, schemaOptions, existingConnection, name }:
+    GetModelForClassOptions = {}) {
+    name = name || this.constructor.name;
     if (!models[name]) {
       this.setModelForClass(t, { existingMongoose, schemaOptions, existingConnection });
     }
@@ -32,8 +34,9 @@ export class Typegoose {
     return models[name] as ModelType<this> & T;
   }
 
-  setModelForClass<T>(t: T, { existingMongoose, schemaOptions, existingConnection }: GetModelForClassOptions = {}) {
-    const name = this.constructor.name;
+  setModelForClass<T>(t: T, { existingMongoose, schemaOptions, existingConnection, name }:
+    GetModelForClassOptions = {}) {
+    name = name || this.constructor.name;
 
     // get schema of current model
     let sch = this.buildSchema<T>(t, name, schemaOptions);
