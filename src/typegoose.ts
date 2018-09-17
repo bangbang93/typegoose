@@ -2,8 +2,6 @@ import 'reflect-metadata';
 import * as mongoose from 'mongoose';
 import * as _ from 'lodash';
 
-(mongoose as any).Promise = global.Promise;
-
 import { schema, models, methods, virtuals, hooks, plugins, constructors } from './data';
 
 export * from './method';
@@ -28,7 +26,7 @@ export class Typegoose {
     GetModelForClassOptions = {}) {
     name = name || this.constructor.name;
     if (!models[name]) {
-      this.setModelForClass(t, { existingMongoose, schemaOptions, existingConnection });
+      this.setModelForClass(t, { existingMongoose, schemaOptions, existingConnection, name });
     }
 
     return models[name] as ModelType<this> & T;
