@@ -11,7 +11,7 @@ export * from './plugin';
 export * from '.';
 export { getClassForDocument } from './utils';
 
-export type InstanceType<T> = T & mongoose.Document;
+export type InstanceType<T> = mongoose.Document & T;
 export type ModelType<T> = mongoose.Model<InstanceType<T>> & T;
 
 export interface GetModelForClassOptions {

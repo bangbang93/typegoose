@@ -25,6 +25,7 @@ export interface BasePropOptions {
   index?: boolean;
   sparse?: boolean;
   expires?: string | number;
+  select?: boolean;
   _id?: boolean;
 }
 
@@ -115,7 +116,7 @@ const baseProp = (rawOptions, Type, target, key, isArray = false) => {
     schema[name][key][0] = {
       ...schema[name][key][0],
       type: mongoose.Schema.Types.ObjectId,
-      ref: itemsRef.name,
+      ref: rawOptions.refName || itemsRef.name,
     };
     return;
   }
@@ -204,6 +205,7 @@ export const prop = (options: PropOptionsWithValidate = {}) => (target: any, key
 export interface ArrayPropOptions extends BasePropOptions {
   items?: any;
   itemsRef?: any;
+  refName?: string;
 }
 
 export const arrayProp = (options: ArrayPropOptions) => (target: any, key: string) => {

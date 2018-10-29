@@ -1,6 +1,6 @@
 {
   "name": "@chipcoo/typegoose",
-  "version": "5.4.4",
+  "version": "5.4.5",
   "description": "Define Mongoose models using TypeScript classes.",
   "main": "lib/typegoose.js",
   "files": [
@@ -44,7 +44,9 @@
     "dotenv": "5.0.1",
     "istanbul": "0.4.5",
     "mocha": "^5.2.0",
+    "mongoose": "^5.2.15",
     "mongoose-findorcreate": "3.0.0",
+    "reflect-metadata": "^0.1.12",
     "rimraf": "2.6.2",
     "tslint": "5.9.1",
     "typescript": "^2.9.2"
