@@ -24,20 +24,20 @@ export interface GetModelForClassOptions {
 export class Typegoose {
   getModelForClass<T>(t: T, { existingMongoose, schemaOptions, existingConnection, name }:
     GetModelForClassOptions = {}) {
-    name = name || this.constructor.name;
-    if (!models[name]) {
+    const className = this.constructor.name;
+    if (!models[className]) {
       this.setModelForClass(t, { existingMongoose, schemaOptions, existingConnection, name });
     }
 
-    return models[name] as ModelType<this> & T;
+    return models[className] as ModelType<this> & T;
   }
 
   setModelForClass<T>(t: T, { existingMongoose, schemaOptions, existingConnection, name }:
     GetModelForClassOptions = {}) {
-    name = name || this.constructor.name;
+    const className = this.constructor.name;
 
     // get schema of current model
-    let sch = this.buildSchema<T>(t, name, schemaOptions);
+    let sch = this.buildSchema<T>(t, className, schemaOptions);
     // get parents class name
     let parentCtor = Object.getPrototypeOf(this.constructor.prototype).constructor;
     // iterate trough all parents
@@ -55,10 +55,10 @@ export class Typegoose {
       model = existingMongoose.model.bind(existingMongoose);
     }
 
-    models[name] = model(name, sch);
-    constructors[name] = this.constructor;
+    models[className] = model(name, sch);
+    constructors[className] = this.constructor;
 
-    return models[name] as ModelType<this> & T;
+    return models[className] as ModelType<this> & T;
   }
 
   private buildSchema<T>(t: T, name: string, schemaOptions, sch?: mongoose.Schema) {
