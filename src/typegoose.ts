@@ -37,7 +37,7 @@ export class Typegoose {
     name = name || this.constructor.name;
 
     // get schema of current model
-    let sch = this.buildSchema<T>(t, this.constructor.name, schemaOptions);
+    let sch = this.buildSchema<T>(t, name, schemaOptions);
     // get parents class name
     let parentCtor = Object.getPrototypeOf(this.constructor.prototype).constructor;
     // iterate trough all parents
